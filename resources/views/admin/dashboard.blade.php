@@ -1,0 +1,6 @@
+@extends('layouts.app')
+@section('content')
+<div class="page-head"><div><span class="eyebrow">ADMINISTRATION</span><h1>Emergency Monitoring Dashboard</h1><p>Monitor alerts, responders, and community safety.</p></div><a class="btn blue" href="{{ route('admin.alerts') }}">Manage Alerts →</a></div>
+<div class="stats"><div class="stat redstat"><span>🚨</span><div><small>Active Alerts</small><strong>{{ $active }}</strong></div></div><div class="stat blue"><span>🚑</span><div><small>Responding</small><strong>{{ $responding }}</strong></div></div><div class="stat green"><span>✓</span><div><small>Resolved</small><strong>{{ $resolved }}</strong></div></div><div class="stat purple"><span>📊</span><div><small>Total Alerts</small><strong>{{ $total }}</strong></div></div></div>
+<div class="panel"><div class="panel-head"><h2>Recent Alerts</h2><a href="{{ route('admin.alerts') }}">View all →</a></div><table><tr><th>Reference</th><th>Resident</th><th>Type</th><th>Location</th><th>Status</th></tr>@foreach($recent as $a)<tr><td>{{ $a->reference_number }}</td><td>{{ $a->user->name }}</td><td>{{ $a->emergency_type }}</td><td>{{ $a->location }}</td><td><span class="status {{ $a->status }}">{{ $a->statusLabel() }}</span></td></tr>@endforeach</table></div>
+@endsection

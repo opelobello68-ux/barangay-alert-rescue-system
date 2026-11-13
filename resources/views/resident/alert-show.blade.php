@@ -1,0 +1,6 @@
+@extends('layouts.app')
+@section('content')
+<div class="page-head"><div><span class="eyebrow">ALERT DETAILS</span><h1>{{ $alert->emergency_type }}</h1><p>{{ $alert->reference_number }}</p></div><span class="status {{ $alert->status }}">{{ $alert->statusLabel() }}</span></div>
+<div class="detail-grid"><div class="panel"><h2>Report Information</h2><p><b>Location:</b> {{ $alert->location }}</p><p><b>Reported:</b> {{ $alert->created_at->format('M d, Y h:i A') }}</p><p><b>Description:</b><br>{{ $alert->description }}</p>@if($alert->photo)<img class="evidence" src="{{ asset('storage/'.$alert->photo) }}">@endif</div>
+<div class="panel"><h2>Response Tracking</h2><div class="timeline">@foreach([['pending','Alert Submitted'],['accepted','Responder Assigned'],['on_the_way','Responder On the Way'],['arrived','Responder Arrived'],['resolving','In Rescue'],['resolved','Incident Resolved']] as [$key,$label])<div class="time {{ $alert->status === $key ? 'current' : '' }}"><i>{{ in_array($key, ['pending','accepted','on_the_way','arrived','resolving','resolved']) && array_search($key,['pending','accepted','on_the_way','arrived','resolving','resolved']) <= array_search($alert->status,['pending','accepted','on_the_way','arrived','resolving','resolved']) ? '✓' : '' }}</i><span>{{ $label }}</span></div>@endforeach</div></div></div>
+@endsection
